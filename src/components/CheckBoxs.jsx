@@ -17,7 +17,7 @@ export const CheckBoxs = (props) =>{
     }
 
     //グラフ描画処理
-    const showGraph = code => {
+    const showGraph = (code, prefName) => {
         const headers = setHeader(API_KEY);
         const URL = `${END_POINT}/api/v1/population/composition/perYear?prefCode=${code}`;
 
@@ -26,34 +26,81 @@ export const CheckBoxs = (props) =>{
         })
         .then(json => {
             const thePref = json.result.data[0].data;
+            let newPopulations;
 
             //チェックをしたのか外したのかを判定
             if(code in populations){
                 //消す処理
-                const newPopulations = Object.create(populations);
-                delete newPopulations[code];
-                setPopulations(newPopulations);
+                newPopulations = Object.assign(populations);
+                delete newPopulations[code.toString()];
             }
             else{
                 //追加処理
-                const newPopulations = Object.create(populations);
-                newPopulations[code.toString()] = thePref;
-                setPopulations(newPopulations);
+                newPopulations = Object.assign(populations);
+                newPopulations[code.toString()] = {pref: prefName ,data: thePref};
             }
 
             const graph = document.querySelector("#drawGraph").getContext("2d");
-            // const myChart = new Chart( graph, {
-            //         type: "line",
-            //         data: {
-            //             labels : newPopulations["4"].filter(name => {
-            //                 return name.year;
-            //             }),
-            //             datasets: [{
-            //                 label: 
-            //             }]
-            //         }
-            //     }
-            // )
+
+            try{
+                myChart.destroy();
+            }
+            catch{
+                ;
+            }
+
+            const showGraphData = [];
+            
+            //chart.jsのグラフに入れるために情報を整形
+            for(const one in newPopulations){
+                const onePrefData = newPopulations[one];
+                const onePrefValueData = onePrefData.data.map(name => {return name.value});
+                showGraphData.push(
+                    {
+                        label: onePrefData.pref,
+                        type: "line",
+                        fill: false,
+                        data: onePrefValueData,
+                        borderColor: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`,
+                        yAxisID: "y-axis-1",
+                    }
+                )
+            }
+            
+            myChart = new Chart(graph, {
+                type: "line",
+                data: {
+                    labels: thePref.map(name => {return name.year}),
+                    datasets: showGraphData
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            id: "y-axis-1",
+                            type: "linear",
+                            position: "left",
+                            scaleLabel: {
+                                display: true,
+                                labelString: "人口"
+                            },
+                            ticks: {
+                                min: 0,
+                            }
+                        }],
+                        xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: "年代"
+                            },
+                            ticks: {
+                                min: 0,
+                            }
+                        }],
+                    },
+                }
+            });
+
+            setPopulations(newPopulations);
         });
     }
     
@@ -92,10 +139,28 @@ export const CheckBoxs = (props) =>{
                 },
                 options: {
                     scales: {
-                        yAxes: [{
-                            id: "y-axis-1",
-                            type: "linear",
-                            position: "left",
+                        yAxes: [
+                            {
+                                id: "y-axis-1",
+                                type: "linear",
+                                position: "left",
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: "人口"
+                                },
+                                ticks: {
+                                    min: 0,
+                                }
+                            }
+                        ],
+                        xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: "年代"
+                            },
+                            ticks: {
+                                min: 0,
+                            }
                         }],
                     },
                 }
@@ -115,7 +180,7 @@ export const CheckBoxs = (props) =>{
                         return(
                             <div className="one" key={name.prefCode.toString()}>
                                 <label htmlFor={name.prefCode.toString()}>{name.prefName}</label>
-                                <input type="checkbox" id={name.prefCode.toString()} onChange={() => showGraph(name.prefCode)} />
+                                <input type="checkbox" id={name.prefCode.toString()} onChange={() => showGraph(name.prefCode, name.prefName)} />
                             </div>
                             
                         )
