@@ -1,0 +1,44 @@
+.container {
+  margin: 20px;
+
+  .prefViewTitle {
+    font-size: 1.4rem;
+  }
+
+  hr {
+    margin: 0.8rem auto;
+  }
+
+  .checkBoxes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    position: relative;
+
+    .one {
+      display: flex;
+      width: 20%;
+      min-width: 100px;
+      margin: 5px;
+      .oneLabel {
+        width: 70%;
+      }
+      .oneCheckbox {
+        width: 30%;
+      }
+    }
+  }
+
+  .graphCanvasContainer {
+    height: 70vh;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    .prefViewTitle {
+      font-size: 1.2rem;
+    }
+  }
+}
