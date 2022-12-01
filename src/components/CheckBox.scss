@@ -34,3 +34,11 @@
     height: 70vh;
   }
 }
+
+@media screen and (max-width: 500px) {
+  .container {
+    .prefViewTitle {
+      font-size: 1.2rem;
+    }
+  }
+}
