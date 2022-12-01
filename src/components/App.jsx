@@ -1,4 +1,6 @@
 import { CheckBoxs } from "./CheckBoxs";
+import "./Reset.scss";
+import "./App.scss";
 
 export const App = () => {
   const END_POINT = "https://opendata.resas-portal.go.jp";
@@ -6,8 +8,11 @@ export const App = () => {
 
   return (
     <>
-      <h1>人口推移グラフ</h1>
-      <CheckBoxs END_POINT={END_POINT} API_KEY={KEY}/>
+      <header>
+        <h1>人口推移グラフ</h1>
+      </header>
+
+      <CheckBoxs END_POINT={END_POINT} API_KEY={KEY} />
     </>
   );
-}
+};
