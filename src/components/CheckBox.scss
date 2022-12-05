@@ -17,15 +17,60 @@
     position: relative;
 
     .one {
-      display: flex;
       width: 20%;
       min-width: 100px;
       margin: 5px;
-      .oneLabel {
-        width: 70%;
-      }
+      margin-left: 25px;
       .oneCheckbox {
-        width: 30%;
+        display: none;
+        &:checked + .oneLabel {
+          .label-inner {
+            background-color: rgb(77, 77, 230);
+            &::before {
+              width: 15px;
+            }
+            &::after {
+              width: 10px;
+            }
+          }
+        }
+      }
+      .oneLabel {
+        position: relative;
+        .label-inner {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          border: 1px solid black;
+          top: 50%;
+          left: -25px;
+          border-radius: 3px;
+          transform: translateY(-50%);
+
+          &::before {
+            content: "";
+            transition: all 0.2s ease;
+            transition-delay: 0.2s;
+            position: absolute;
+            width: 0px;
+            height: 3px;
+            top: 30%;
+            left: 58%;
+            transform: rotate(-45deg) translate(-50%, -50%);
+            background-color: white;
+          }
+
+          &::after {
+            content: "";
+            transition: all 0.2s ease;
+            position: absolute;
+            width: 0px;
+            height: 3px;
+            top: 63%;
+            transform: rotate(45deg);
+            background-color: white;
+          }
+        }
       }
     }
   }
