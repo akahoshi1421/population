@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.css": "/population/static/css/main.6392cbf8.css",
-    "main.js": "/population/static/js/main.640a9817.js",
+    "main.css": "/population/static/css/main.c657de64.css",
+    "main.js": "/population/static/js/main.16362f9b.js",
     "static/js/27.a6bfe57f.chunk.js": "/population/static/js/27.a6bfe57f.chunk.js",
     "index.html": "/population/index.html"
   },
   "entrypoints": [
-    "static/css/main.6392cbf8.css",
-    "static/js/main.640a9817.js"
+    "static/css/main.c657de64.css",
+    "static/js/main.16362f9b.js"
   ]
 }
