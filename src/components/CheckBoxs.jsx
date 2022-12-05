@@ -196,6 +196,7 @@ export const CheckBoxs = (props) => {
                 />
                 <label htmlFor={name.prefCode.toString()} className="oneLabel">
                   {name.prefName}
+                  <span className="label-inner"></span>
                 </label>
               </div>
             );
